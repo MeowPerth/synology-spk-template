@@ -1,0 +1,93 @@
+#!/bin/sh
+# 公共函数 + 安装钩子实现。薄壳脚本 source 本文件后调用同名函数。
+
+INST_LOG="/var/log/packages/${SYNOPKG_PKGNAME}.log"
+
+install_log ()
+{
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" 2>/dev/null | tee -a "$INST_LOG" 2>/dev/null || true
+}
+
+log_step ()
+{
+    install_log "==== $* ===="
+}
+
+# package.tgz 内的 var/ 默认文件 -> 持久目录 SYNOPKG_PKGVAR
+syno_sync_var_folder ()
+{
+    local _var="$SYNOPKG_PKGDEST/var"
+    [ -d "$_var" ] || return 0
+    mkdir -p "$SYNOPKG_PKGVAR"
+    find "$_var" -type f | while read -r _f; do
+        _rel=${_f#${_var}/}
+        if [ ! -e "${SYNOPKG_PKGVAR}/${_rel}" ]; then
+            mkdir -p "${SYNOPKG_PKGVAR}/$(dirname "${_rel}")"
+            cp -f "$_f" "${SYNOPKG_PKGVAR}/${_rel}"
+            install_log "  + ${_rel}"
+        fi
+    done
+}
+
+preinst ()
+{
+    log_step preinst
+    exit 0
+}
+
+postinst ()
+{
+    log_step postinst
+    mkdir -p "$SYNOPKG_PKGVAR"
+    syno_sync_var_folder
+    exit 0
+}
+
+preuninst ()
+{
+    log_step preuninst
+    exit 0
+}
+
+postuninst ()
+{
+    log_step postuninst
+
+    case "${wizard_delete_data:-}" in
+        true|TRUE|1)
+            if [ -n "${SYNOPKG_PKGVAR:-}" ] && [ -d "${SYNOPKG_PKGVAR}" ]; then
+                case "${SYNOPKG_PKGVAR}" in
+                    */"${SYNOPKG_PKGNAME}")
+                        install_log "wizard_delete_data=true -> remove ${SYNOPKG_PKGVAR}"
+                        rm -rf -- "${SYNOPKG_PKGVAR}"
+                        ;;
+                    *)
+                        install_log "Refuse to delete unexpected path: ${SYNOPKG_PKGVAR}"
+                        ;;
+                esac
+            fi
+            ;;
+        *)
+            install_log "keep package data: ${SYNOPKG_PKGVAR:-unknown}"
+            ;;
+    esac
+
+    exit 0
+}
+
+preupgrade ()
+{
+    log_step preupgrade
+    if [ -f "${SYNOPKG_PKGVAR}/config.json" ]; then
+        cp -f "${SYNOPKG_PKGVAR}/config.json" \
+              "${SYNOPKG_PKGVAR}/config.json.bak-${SYNOPKG_PKGVER:-unknown}" 2>/dev/null || true
+    fi
+    exit 0
+}
+
+postupgrade ()
+{
+    log_step postupgrade
+    syno_sync_var_folder
+    exit 0
+}

@@ -1,0 +1,36 @@
+#!/bin/sh
+# 返回码：0=运行中，3=已停止；DSM 依赖 status 的返回码
+PIDFILE="${SYNOPKG_PKGVAR}/hello.pid"
+DAEMON="${SYNOPKG_PKGDEST}/bin/hello-daemon.sh"
+
+case "$1" in
+    start)
+        if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+            exit 0
+        fi
+        mkdir -p "$SYNOPKG_PKGVAR"
+        nohup "$DAEMON" >/dev/null 2>&1 &
+        echo $! > "$PIDFILE"
+        sleep 1
+        exit 0
+        ;;
+    stop)
+        if [ -f "$PIDFILE" ]; then
+            kill "$(cat "$PIDFILE")" 2>/dev/null || true
+            rm -f "$PIDFILE"
+        fi
+        exit 0
+        ;;
+    status)
+        if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+            echo "running"
+            exit 0
+        fi
+        echo "stopped"
+        exit 3
+        ;;
+    *)
+        echo "usage: $0 {start|stop|status}" >&2
+        exit 1
+        ;;
+esac
