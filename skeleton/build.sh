@@ -33,6 +33,8 @@ sed "s|@PKG_NAME@|$PKG_NAME|g" "$ROOT/spk/conf/privilege" > "$WORK/conf/privileg
 for f in "$ROOT"/spk/WIZARD_UIFILES/*; do
     sed -e "s|@PKG_NAME@|$PKG_NAME|g" \
         -e "s|@DISPLAY_NAME@|${DISPLAY_NAME:-$PKG_NAME}|g" \
+        -e "s|@DISPLAY_NAME_ENU@|${DISPLAY_NAME_ENU:-$DISPLAY_NAME}|g" \
+        -e "s|@DISPLAY_NAME_CHS@|${DISPLAY_NAME_CHS:-$DISPLAY_NAME}|g" \
         "$f" > "$WORK/WIZARD_UIFILES/$(basename "$f")"
 done
 
@@ -40,6 +42,8 @@ done
 sed -e "s|@PKG_NAME@|$PKG_NAME|g" \
     -e "s|@VERSION@|$VERSION|g" \
     -e "s|@DISPLAY_NAME@|${DISPLAY_NAME:-$PKG_NAME}|g" \
+    -e "s|@DISPLAY_NAME_ENU@|${DISPLAY_NAME_ENU:-$DISPLAY_NAME}|g" \
+    -e "s|@DISPLAY_NAME_CHS@|${DISPLAY_NAME_CHS:-$DISPLAY_NAME}|g" \
     -e "s|@DESCRIPTION@|${DESCRIPTION:-}|g" \
     -e "s|@DESCRIPTION_CHS@|${DESCRIPTION_CHS:-}|g" \
     -e "s|@DESCRIPTION_CHT@|${DESCRIPTION_CHT:-}|g" \

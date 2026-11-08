@@ -1,9 +1,9 @@
 [
   {
-    "step_title": "@DISPLAY_NAME@ installation notes",
+    "step_title": "@DISPLAY_NAME_ENU@ installation notes",
     "items": [
       {
-        "desc": "After installation, authorize <b>@DISPLAY_NAME@</b> in <b>SimplePermissionManager</b>.<br><br>Without authorization it still works, but runs as <b>sc-@PKG_NAME@</b>, cannot preserve uid/gid/ACL, and may be unable to read or delete files not owned by that user.<br><br>If SimplePermissionManager is not installed, install it from Package Center first."
+        "desc": "After installation, authorize <b>@DISPLAY_NAME_ENU@</b> in <b>SimplePermissionManager</b>.<br><br>Without authorization it still works, but runs as <b>sc-@PKG_NAME@</b>, cannot preserve uid/gid/ACL, and may be unable to read or delete files not owned by that user.<br><br>If SimplePermissionManager is not installed, install it from Package Center first."
       }
     ]
   }

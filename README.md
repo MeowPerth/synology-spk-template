@@ -6,6 +6,7 @@
 - 通用开发规范：[docs/SPK-DEV-GUIDE.md](docs/SPK-DEV-GUIDE.md)
 - 安装提示 / 卸载数据选择向导模板
 - `package` 权限 + SimplePermissionManager 提权说明
+- 套件显示名：`displayname` / `displayname_enu` / `displayname_chs` 三处同时配置
 - 版本号规范（未发布 0.0.1 → 首版 1.0.0）
 - Git / GitHub CLI 推送与 Release 流程
 

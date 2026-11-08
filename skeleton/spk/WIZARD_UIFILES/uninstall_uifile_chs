@@ -1,6 +1,6 @@
 [
   {
-    "step_title": "卸载 @DISPLAY_NAME@",
+    "step_title": "卸载 @DISPLAY_NAME_CHS@",
     "items": [
       {
         "type": "singleselect",

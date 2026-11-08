@@ -1,6 +1,6 @@
 # 最小 SPK 骨架
 
-1. 修改 `build.conf`
+1. 修改 `build.conf`（包括 `DISPLAY_NAME` / `DISPLAY_NAME_ENU` / `DISPLAY_NAME_CHS` 三个显示名）
 2. 把程序放进 `pkg/`（会打进 `package.tgz`，安装到 `SYNOPKG_PKGDEST`）
 3. 修改 `spk/scripts/start-stop-status` 启停你的服务
 4. 需要桌面 UI 时：

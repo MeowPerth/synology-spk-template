@@ -1,6 +1,6 @@
 [
   {
-    "step_title": "Uninstall @DISPLAY_NAME@",
+    "step_title": "Uninstall @DISPLAY_NAME_ENU@",
     "items": [
       {
         "type": "singleselect",

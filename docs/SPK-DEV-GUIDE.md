@@ -136,6 +136,8 @@ description_cht="繁體說明"
 arch="noarch"
 os_min_ver="7.0-40120"
 displayname="<DISPLAY_NAME>"
+displayname_enu="<DISPLAY_NAME_ENU>"
+displayname_chs="<DISPLAY_NAME_CHS>"
 dsmuidir="ui"
 dsmappname="<VENDOR>.<PKG>.AppInstance"
 maintainer="<MAINTAINER>"
@@ -152,6 +154,10 @@ checksum="<package.tgz md5>"
 
 - 只能 `key="value"`，不能有空行或注释，否则 DSM 拒绝安装
 - `arch="noarch"` 适合纯脚本/Python；含二进制时用具体架构
+- 三个显示名要同时配置，避免 Package Center 在中文/英文界面显示不一致：
+  - `displayname`：默认名称（建议中文）
+  - `displayname_enu`：英文名称
+  - `displayname_chs`：简体中文名称
 - `dsmappname` 必须与 `dsm-wrapper.js` 中 `Ext.define` 的 AppInstance 类名完全一致
 - `startable="yes"` 才会在套件中心出现启动/停止
 
